@@ -11,11 +11,12 @@ import (
 
 func main() {
 	api := rest.NewApi()
-	//	statusMw := statsd.StatsdMiddleware{}
 	api.Use(&restprometheus.PromMiddleware{})
 	api.Use(rest.DefaultDevStack...)
 	router, err := rest.MakeRouter(
-		rest.Get("/metrics", rest.HandlerFunc(prometheus.InstrumentHandler("prometheus", prometheus.Handler()))),
+		rest.Get("/metrics", func(w rest.ResponseWriter, r *rest.Request) {
+			prometheus.InstrumentHandler("prometheus", prometheus.Handler())(w.(http.ResponseWriter), r.Request)
+		}),
 	)
 	if err != nil {
 		log.Fatal(err)
