@@ -39,6 +39,9 @@ func main() {
 }
 ```
 
+### Thanks/Contributors
+- [hydroflame](https://github.com/hydroflame) - For his help converting `http.HandlerFunc` to `rest.HandlerFunc` and all the `go` magic I am learning from him
+
 ### TODO
 
 - Add custom bucket definitions
